@@ -13,8 +13,8 @@ const askFloorValue = () => {
   if (isNaN(floors) || !floors) askFloorValue();
 };
 
-// askFloorValue();
-// askLiftValue();
+askFloorValue();
+askLiftValue();
 
 let requestedFloors = [];
 let liftsState = Array(lifts)
