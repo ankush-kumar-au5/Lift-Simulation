@@ -13,8 +13,8 @@ const askFloorValue = () => {
   if (isNaN(floors) || !floors) askFloorValue();
 };
 
-askFloorValue();
-askLiftValue();
+// askFloorValue();
+// askLiftValue();
 
 let requestedFloors = [];
 let liftsState = Array(lifts)
@@ -109,7 +109,10 @@ const handleDoorAnimation = (data, isDisabled) => {
     liftsState[id] = { ...data, isBusy: false };
     document.getElementById(`liftHeadingTo-${id}`).innerText = "";
     door.classList.remove("openCloseDoor");
-    // door.classList.remove("openDoor");
+
+    if (data?.isDisabled && !door.classList.contains("openDoor")) {
+      door.classList.add("openDoor");
+    }
     checkRequests();
   };
 
@@ -280,5 +283,7 @@ const myFunction = () => {
 
     requestedFloors.push(liftData.currentFloor);
     checkRequests();
+  } else {
+    handleDoorAnimation(liftData, true);
   }
 };
