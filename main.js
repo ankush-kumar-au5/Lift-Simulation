@@ -150,11 +150,17 @@ const checkRequests = () => {
   updateUI();
 
   if (!requestedFloors.length) return;
-  let idleLift = liftsState.find((v) => !v.isBusy && !v.isDisabled);
-  if (!idleLift) return;
+  let idleLifts = liftsState.filter((v) => !v.isBusy && !v.isDisabled);
+  if (!idleLifts.length) return;
+
+  const newFloorToGo = requestedFloors.shift();
+  const distanceOfLifts = idleLifts?.map((v) =>
+    Math.abs(newFloorToGo - v.currentFloor)
+  );
+  let minDistance = distanceOfLifts.indexOf(Math.min(...distanceOfLifts));
+  let idleLift = idleLifts[minDistance];
 
   const { currentFloor, id } = { ...idleLift };
-  const newFloorToGo = requestedFloors.shift();
   liftsState[id] = {
     ...idleLift,
     isBusy: true,
